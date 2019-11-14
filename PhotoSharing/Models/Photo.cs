@@ -17,7 +17,6 @@ namespace PhotoSharing.Models
         [StringLength(150,ErrorMessage ="不可超過150字")]
         [DisplayName("主題")]
         public string Title { get; set; }
-        [Required]
         [MaxLength]
         [DisplayName("上傳圖片")]
         public byte[] PhotoFile{ get; set; }

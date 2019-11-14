@@ -55,6 +55,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -164,10 +165,51 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OldPhotosController.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
+    <Compile Include="Controllers\ValueReporter.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="EntitySQL\Controllers\EntitySQLCommentController.cs" />
+    <Compile Include="EntitySQL\Models\ActionLog.cs">
+      <DependentUpon>PhotoComment.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntitySQL\Models\Comments.cs">
+      <DependentUpon>PhotoComment.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntitySQL\Models\C__MigrationHistory.cs">
+      <DependentUpon>PhotoComment.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntitySQL\Models\PhotoComment.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhotoComment.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntitySQL\Models\PhotoComment.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhotoComment.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntitySQL\Models\PhotoComment.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhotoComment.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EntitySQL\Models\Photos.cs">
+      <DependentUpon>PhotoComment.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntitySQL\Models\RequestLog.cs">
+      <DependentUpon>PhotoComment.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911110551173_InitialCreate.cs" />
+    <Compile Include="Migrations\201911110551173_InitialCreate.Designer.cs">
+      <DependentUpon>201911110551173_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911110821170_addblogurl.cs" />
+    <Compile Include="Migrations\201911110821170_addblogurl.Designer.cs">
+      <DependentUpon>201911110821170_addblogurl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\PhotoSharingContext.cs" />
@@ -180,6 +222,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="EntitySQL\Models\PhotoComment.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PhotoComment.Context.cs</LastGenOutput>
+      <DependentUpon>PhotoComment.edmx</DependentUpon>
+    </Content>
+    <Content Include="EntitySQL\Models\PhotoComment.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PhotoComment.edmx</DependentUpon>
+      <LastGenOutput>PhotoComment.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -208,11 +260,23 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <EntityDeploy Include="EntitySQL\Models\PhotoComment.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PhotoComment.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="EntitySQL\Models\PhotoComment.edmx.diagram">
+      <DependentUpon>PhotoComment.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -233,9 +297,14 @@
     <Content Include="Views\OldPhotos\Details.cshtml" />
     <Content Include="Views\OldPhotos\Edit.cshtml" />
     <Content Include="Views\OldPhotos\Index.cshtml" />
-    <Content Include="Views\Photos\Index.cshtml" />
+    <Content Include="Views\Photos\OLD_Index.cshtml" />
     <Content Include="Views\Photos\Display.cshtml" />
     <Content Include="Views\Photos\Delete.cshtml" />
+    <Content Include="Views\Photos\Create.cshtml" />
+    <Content Include="Views\Shared\_PhotoGallery.cshtml" />
+    <Content Include="Views\Photos\Index.cshtml" />
+    <Content Include="Views\EntitySQLComment\Index.cshtml" />
+    <Content Include="Views\EntitySQLComment\CreateComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -268,6 +337,17 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201911110551173_InitialCreate.resx">
+      <DependentUpon>201911110551173_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911110821170_addblogurl.resx">
+      <DependentUpon>201911110821170_addblogurl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

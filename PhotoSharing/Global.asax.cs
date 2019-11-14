@@ -16,7 +16,7 @@ namespace PhotoSharing
         protected void Application_Start()
         {
             //執行完必須刪除此行
-            Database.SetInitializer<PhotoSharingContext>(new PhotoSharingInitialier());
+            //Database.SetInitializer<PhotoSharingContext>(new PhotoSharingInitialier());
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

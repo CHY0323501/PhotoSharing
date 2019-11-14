@@ -4,64 +4,28 @@
     ViewBag.Title = "Display";
 }
 
-<h2>Display</h2>
+    <fieldset>
+        <legend>
+            @Model.Title
+        </legend>
+        @if (Model.PhotoFile!=null)
+        {
+            <img src="@Url.Action("GetImage","Photos",new { id=Model.PhotoID})" class="img-responsive img-rounded" />
+        }
 
-<div>
-    <h4>Photo</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhotoFile)
-        </dt>
-
-        <dd>
-            @*@Html.DisplayFor(model => model.PhotoFile)*@
-            <img src="@Url.Action("GetImage","Photos",new { id=Model.PhotoID})"class="img-rounded img-responsive" />
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageMimeType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ImageMimeType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-    </dl>
-</div>
+        <p>
+            @Html.Raw(Html.DisplayFor(m => m.Description).ToString().Replace("\n","<br>"))
+        </p>
+        <p>
+            @Html.DisplayNameFor(m => m.UserName)
+            @Html.DisplayFor(m => m.UserName)
+        </p>
+        <p>
+            @Html.DisplayNameFor(m => m.CreatedDate)
+            @Html.DisplayFor(m => m.CreatedDate)
+        </p>
+    </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PhotoID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("刪除","Delete",new { id=Model.PhotoID})
+    @Html.ActionLink("返回列表","Index")
 </p>

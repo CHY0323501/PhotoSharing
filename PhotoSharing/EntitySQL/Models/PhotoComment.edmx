@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PhotoSharingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActionLog">
+          <Key>
+            <PropertyRef Name="ActionLogSN" />
+          </Key>
+          <Property Name="ActionLogSN" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="logTime" Type="datetime" Nullable="false" />
+          <Property Name="controllerName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="actionName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="parame" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PhotoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Photos">
+          <Key>
+            <PropertyRef Name="PhotoID" />
+          </Key>
+          <Property Name="PhotoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="PhotoFile" Type="varbinary(max)" />
+          <Property Name="ImageMimeType" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestLog">
+          <Key>
+            <PropertyRef Name="RequestLogSN" />
+          </Key>
+          <Property Name="RequestLogSN" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="logTime" Type="datetime" Nullable="false" />
+          <Property Name="ip" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="host" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="browser" Type="varchar(max)" Nullable="false" />
+          <Property Name="requestType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="userHostAddress" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="userHostName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="httpMethod" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Comments_dbo_Photos_PhotoID">
+          <End Role="Photos" Type="Self.Photos" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photos">
+              <PropertyRef Name="PhotoID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="PhotoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Add_Comment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+          <Parameter Name="subject" Type="nvarchar" Mode="In" />
+          <Parameter Name="body" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="photoid" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="PhotoSharingModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActionLog" EntityType="Self.ActionLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Photos" EntityType="Self.Photos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestLog" EntityType="Self.RequestLog" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Comments_dbo_Photos_PhotoID" Association="Self.FK_dbo_Comments_dbo_Photos_PhotoID">
+            <End Role="Photos" EntitySet="Photos" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PhotoSharingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActionLog">
+          <Key>
+            <PropertyRef Name="ActionLogSN" />
+          </Key>
+          <Property Name="ActionLogSN" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="logTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="controllerName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="actionName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="parame" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Body" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhotoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Photos" Relationship="Self.FK_dbo_Comments_dbo_Photos_PhotoID" FromRole="Comments" ToRole="Photos" />
+        </EntityType>
+        <EntityType Name="Photos">
+          <Key>
+            <PropertyRef Name="PhotoID" />
+          </Key>
+          <Property Name="PhotoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhotoFile" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageMimeType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_dbo_Comments_dbo_Photos_PhotoID" FromRole="Photos" ToRole="Comments" />
+        </EntityType>
+        <EntityType Name="RequestLog">
+          <Key>
+            <PropertyRef Name="RequestLogSN" />
+          </Key>
+          <Property Name="RequestLogSN" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="logTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ip" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="host" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="browser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="requestType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userHostAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userHostName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="httpMethod" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Comments_dbo_Photos_PhotoID">
+          <End Role="Photos" Type="Self.Photos" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photos">
+              <PropertyRef Name="PhotoID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="PhotoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PhotoSharingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="ActionLog" EntityType="Self.ActionLog" />
+          <EntitySet Name="Comments" EntityType="Self.Comments" />
+          <EntitySet Name="Photos" EntityType="Self.Photos" />
+          <EntitySet Name="RequestLog" EntityType="Self.RequestLog" />
+          <AssociationSet Name="FK_dbo_Comments_dbo_Photos_PhotoID" Association="Self.FK_dbo_Comments_dbo_Photos_PhotoID">
+            <End Role="Photos" EntitySet="Photos" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <FunctionImport Name="Add_Comment">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="subject" Mode="In" Type="String" />
+            <Parameter Name="body" Mode="In" Type="String" />
+            <Parameter Name="photoid" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PhotoSharingModelStoreContainer" CdmEntityContainer="PhotoSharingEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="PhotoSharingModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActionLog">
+            <EntityTypeMapping TypeName="PhotoSharingModel.ActionLog">
+              <MappingFragment StoreEntitySet="ActionLog">
+                <ScalarProperty Name="ActionLogSN" ColumnName="ActionLogSN" />
+                <ScalarProperty Name="logTime" ColumnName="logTime" />
+                <ScalarProperty Name="controllerName" ColumnName="controllerName" />
+                <ScalarProperty Name="actionName" ColumnName="actionName" />
+                <ScalarProperty Name="parame" ColumnName="parame" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="PhotoSharingModel.Comments">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Photos">
+            <EntityTypeMapping TypeName="PhotoSharingModel.Photos">
+              <MappingFragment StoreEntitySet="Photos">
+                <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PhotoFile" ColumnName="PhotoFile" />
+                <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestLog">
+            <EntityTypeMapping TypeName="PhotoSharingModel.RequestLog">
+              <MappingFragment StoreEntitySet="RequestLog">
+                <ScalarProperty Name="RequestLogSN" ColumnName="RequestLogSN" />
+                <ScalarProperty Name="logTime" ColumnName="logTime" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="host" ColumnName="host" />
+                <ScalarProperty Name="browser" ColumnName="browser" />
+                <ScalarProperty Name="requestType" ColumnName="requestType" />
+                <ScalarProperty Name="userHostAddress" ColumnName="userHostAddress" />
+                <ScalarProperty Name="userHostName" ColumnName="userHostName" />
+                <ScalarProperty Name="httpMethod" ColumnName="httpMethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Add_Comment" FunctionName="PhotoSharingModel.Store.Add_Comment" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
