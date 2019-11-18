@@ -105,6 +105,17 @@ namespace PhotoSharing.Controllers
 
             return View();
         }
+
+        //若發生400或500系列錯誤(伺服器層級錯誤)要指定特定page
+        //需到webconfig中的<system.webServer>中輸入以下程式碼
+            //<httpErrors errorMode = "Custom" >
+            //<remove statusCode="404"/>
+            //<error statusCode = "404" path="/404.html" responseMode="ExecuteURL"/>
+            //<remove statusCode = "400" />
+            //<error statusCode="400" path="/400.html" responseMode="ExecuteURL"/>
+            //</httpErrors>
+
+
         //發生例外顯示的view2
         //尚未實作的例外(throw new NotImplementedException)
         //1.要到app_start的filterconfig中先註冊filters.Add(new HandleErrorAttribute());
