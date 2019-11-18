@@ -305,6 +305,9 @@
     <Content Include="Views\Photos\Index.cshtml" />
     <Content Include="Views\EntitySQLComment\Index.cshtml" />
     <Content Include="Views\EntitySQLComment\CreateComment.cshtml" />
+    <Content Include="Views\Photos\ExceptionDemo.cshtml" />
+    <Content Include="Views\Photos\SliderShow.cshtml" />
+    <Content Include="Views\Shared\ExceptionError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

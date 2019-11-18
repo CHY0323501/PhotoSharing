@@ -24,13 +24,15 @@ namespace PhotoSharing.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             Photo photo = context.Photos.Find(id);
-            if (photo == null) {
+            if (photo == null)
+            {
                 return HttpNotFound();
             }
-            
+
             return View(photo);
         }
-        public ActionResult Create() {
+        public ActionResult Create()
+        {
             Photo newPhoto = new Photo();
             newPhoto.CreatedDate = DateTime.Today;
             return View(newPhoto);
@@ -38,12 +40,13 @@ namespace PhotoSharing.Controllers
 
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Create(Photo photo ,HttpPostedFileBase img)
+        public ActionResult Create(Photo photo, HttpPostedFileBase img)
         {
             photo.CreatedDate = DateTime.Today;
             if (ModelState.IsValid)
             {
-                if (img != null){
+                if (img != null)
+                {
                     photo.ImageMimeType = img.ContentType;      //抓照片副檔名
                     photo.PhotoFile = new byte[img.ContentLength];
                     img.InputStream.Read(photo.PhotoFile, 0, img.ContentLength);
@@ -59,7 +62,7 @@ namespace PhotoSharing.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                Photo photo = context.Photos.Find(id);
+            Photo photo = context.Photos.Find(id);
             if (photo == null)
             {
                 return HttpNotFound();
@@ -80,30 +83,51 @@ namespace PhotoSharing.Controllers
         //partial view需標以下標籤
         //partial view名稱底線開頭表示禁止單獨存取此view，需有其他主view才可存取
         [ChildActionOnly]
-        public ActionResult _PhotoGallery(int number=0) {
+        public ActionResult _PhotoGallery(int number = 0)
+        {
             List<Photo> photos;
             if (number == 0)
             {
-                 photos = context.Photos.OrderByDescending(m => m.CreatedDate).ThenByDescending(m => m.PhotoID).ToList();
+                photos = context.Photos.OrderByDescending(m => m.CreatedDate).ThenByDescending(m => m.PhotoID).ToList();
             }
-            else {
-                 photos = context.Photos.OrderByDescending(m => m.CreatedDate).ThenByDescending(m => m.PhotoID).Take(number).ToList();
+            else
+            {
+                photos = context.Photos.OrderByDescending(m => m.CreatedDate).ThenByDescending(m => m.PhotoID).Take(number).ToList();
                 //相當於SQL
                 //select top 2 * from photos order by CreateDate,PhotoID
             }
             return PartialView(photos);
         }
+        //發生例外顯示的view
+        public ActionResult ExceptionDemo() {
+            int i = 0;
+            int j = 10 / i;
 
+            return View();
+        }
+        //發生例外顯示的view2
+        //尚未實作的例外(throw new NotImplementedException)
+        //1.要到app_start的filterconfig中先註冊filters.Add(new HandleErrorAttribute());
+        //2.到webconfig中的system.web中新增<customErrors mode="On"></customErrors>，mode="remoteonly"表示開發人員看到的是系統錯誤頁面，使用者看到的是導到自訂的error頁面
+        //要指定相對的error page，使用負面表列方式(因為filter已註冊整個應用程式層級的錯誤訊息註冊)，加上以下標籤
+        [HandleError(View ="ExceptionError")]
+        public ActionResult SliderShow()
+        {
+            throw new NotImplementedException("這一個相簿功能尚未完成");
+        }
 
         //取得照片
         //負面表列(註冊應用程式紀錄後，排除少數不紀錄)
-        [ValueReporter(IsLog =false)]
-        public FileContentResult GetImage(int id) {
-            Photo photo= context.Photos.Find(id);
+        [ValueReporter(IsLog = false)]
+        public FileContentResult GetImage(int id)
+        {
+            Photo photo = context.Photos.Find(id);
             if (photo != null)
                 return File(photo.PhotoFile, photo.ImageMimeType);
             else
-                return null;        }
+                return null;
+        }
+
     }
 }
 

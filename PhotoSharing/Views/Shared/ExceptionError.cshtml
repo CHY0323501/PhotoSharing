@@ -18,13 +18,13 @@
     ViewBag.Title = "ExceptionDemo";
 }
 <h1 class="text-danger">Wow!!Something Error......</h1>
-<h2 class="text-warning">伺服器正在忙碌中，請稍後再試</h2>
-<hr />
+<h2 class="text-warning">@Model.Exception.Message</h2>
+@*<hr />
 <fieldset>
     <legend>HandleErrorInfo</legend>
     <p>Controller:@Model.ControllerName</p>
     <p>Action:@Model.ActionName</p>
     <p>Exception:@Model.Exception.GetType().ToString()</p>
     <p>Message:@Model.Exception.Message</p>
-</fieldset>
+</fieldset>*@
 
