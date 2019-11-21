@@ -29,6 +29,12 @@
         </div>
     </div>
     <div class="container body-content">
+
+        MENU:@Html.MvcSiteMap().Menu(false,false,true)
+        CURRENT:@Html.MvcSiteMap().SiteMapPath()
+        
+        <hr />
+
         @RenderBody()
         <hr />
         <footer>

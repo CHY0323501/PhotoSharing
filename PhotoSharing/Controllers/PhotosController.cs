@@ -139,6 +139,15 @@ namespace PhotoSharing.Controllers
                 return null;
         }
 
+        //路由可帶文字
+        [Route(@"photos/title/{title}")]//雙引號前加上@
+        public ActionResult DisplayByTitle(string title) {
+            Photo photo = context.Photos.Where(m => m.Title == title).FirstOrDefault();
+            if (photo == null)
+                HttpNotFound();
+            return View("Display",photo);
+        }
+
     }
 }
 
