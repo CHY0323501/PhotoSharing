@@ -148,6 +148,27 @@ namespace PhotoSharing.Controllers
             return View("Display",photo);
         }
 
+        public ActionResult AjaxDemo() {
+            return View();
+        }
+        //AjaxDemo
+        public ActionResult JsonData(string id) {
+            if (Request.IsAjaxRequest())
+            {
+                Photo photo = context.Photos.Find(int.Parse(id));
+                if (photo == null)
+                    return HttpNotFound();
+                var data = new
+                {
+                    id = photo.PhotoID,
+                    title = photo.Title,
+                    description=photo.Description,
+                    createdate=photo.CreatedDate
+                };
+                return Json(data);
+            };
+            return View();
+        }
     }
 }
 

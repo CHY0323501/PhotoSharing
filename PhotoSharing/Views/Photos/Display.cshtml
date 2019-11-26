@@ -25,6 +25,8 @@
             @Html.DisplayFor(m => m.CreatedDate)
         </p>
     </fieldset>
+
+@Html.Action("_CommentsForPhoto","Comments",new { PhotoID=Model.PhotoID})
 <p>
     @Html.ActionLink("刪除","Delete",new { id=Model.PhotoID})
     @Html.ActionLink("返回列表","Index")

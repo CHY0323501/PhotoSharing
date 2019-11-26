@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "AjaxDemo";
+}
+
+<h2>AjaxDemo</h2>
+
+<form id="form1">
+    <input id="id" type="text" name="id" />
+    <input id="Button1" type="button" value="button" />
+</form>
+<ul id="result"></ul>
+<img id="photo" width="70%" />
+
+@section script{
+    <script>
+        $('#Button1').click(function () {
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("JsonData")",
+                data: $('#form1').serialize(),
+                success: function (d) {
+                    console.log(d);
+                    $('#result').append("<li>" + d.id + "</li><li>" + d.title + "</li><li>" + d.description + "</li><li>" + new Date(parseInt(d.createdate.replace('/Date(', ''))) + "</li>");
+
+                    $('#photo').attr('src','@Url.Action("GetImage","Photos")'+"/"+$('#id').val())
+                }
+            })
+        })
+    </script>
+}

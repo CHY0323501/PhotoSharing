@@ -66,8 +66,39 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" onclick="return confirm('確定要刪除嗎？')"/> |
+            <input type="submit" value="Delete" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")
+        </div>
+        <div id="mydialog" title="Delete">
+            確定執行刪除作業O_O
         </div>
     }
 </div>
+@section script{
+    <script>
+    $('.btn').click(function (e) {
+        e.preventDefault();
+        $('#mydialog').dialog("open");
+    })
+    $('#mydialog').dialog({
+        autoOpen: false,
+        modal: true,
+        draggable: false,
+        resizable: false,
+        title: "是否刪除?",
+        show: {
+            effect: "blind",
+            duration:1000
+        },
+        hide: {
+            effect: "explode",
+            duration:1000
+        },
+        buttons: [
+            { text: "是", click: function () { $('form').submit();$(this).dialog("close") } },
+            { text: "取消", click: function () { $(this).dialog("close") } }
+        ]
+        
+    });
+    </script>    
+}
