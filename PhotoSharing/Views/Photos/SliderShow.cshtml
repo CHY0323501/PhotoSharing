@@ -1,7 +1,25 @@
-﻿
+﻿@model IEnumerable<PhotoSharing.Models.Photo>
+
 @{
     ViewBag.Title = "SliderShow";
 }
 
 <h2>SliderShow</h2>
 
+<ul class="pgwSlideshow">
+    @foreach (var i in Model)
+    {
+        <li>
+            <img src="@Url.Action("GetImage","Photos",new { id=i.PhotoID})" data-description="@i.Description" alt="@i.Title" />
+        </li>
+    }
+</ul>
+@section script{
+    <script src="~/Scripts/pgwslideshow.min.js"></script>
+    <script>
+        $('.pgwSlideshow').pgwSlideshow();
+    </script>
+}
+@section CSS{
+    <link href="~/Content/pgwslideshow.min.css" rel="stylesheet" />
+}

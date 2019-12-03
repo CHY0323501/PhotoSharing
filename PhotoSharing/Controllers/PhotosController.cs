@@ -124,7 +124,12 @@ namespace PhotoSharing.Controllers
         [HandleError(View ="ExceptionError")]
         public ActionResult SliderShow()
         {
-            throw new NotImplementedException("這一個相簿功能尚未完成");
+            //下載:https://github.com/Pagawa/PgwSlideshow
+            //加入css檔及js檔到專案即可
+
+            return View(context.Photos.ToList());
+
+            //throw new NotImplementedException("這一個相簿功能尚未完成");
         }
 
         //取得照片
@@ -167,6 +172,28 @@ namespace PhotoSharing.Controllers
                 };
                 return Json(data);
             };
+            return View();
+        }
+        //傳遞資料DEMO，狀態保留時間
+        public ActionResult StateDemo() {
+            //ViewBag及ViewData生命週期相同，只在當前ACITON有效
+            //差別在於ViewBag是動態型別可不用轉型、ViewData取用資料前需先轉型
+            ViewBag.Message = "Welcome To ASP.net MVC!!";
+            ViewData["myName"] = "Jack";
+
+            //TempData的資料最多只能經過一次傳遞(可跨ACTION，一旦被拜訪過就消失)
+            TempData["myAge"] = "25歲";
+            TempData["myGender"] = "男生";
+
+            //只要給過一次，就能在不同的VIEW中重複使用
+            Session["myID"] = "A123456789";
+
+
+            return View();
+        }
+        public ActionResult StateDemo2()
+        {
+
             return View();
         }
     }

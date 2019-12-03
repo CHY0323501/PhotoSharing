@@ -4,12 +4,15 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - Instagram</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    @Styles.Render("~/Content/css")
+
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/Content/themes/ui-darkness/jquery.ui.all.css" rel="stylesheet" />
 
-    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />*@
     @RenderSection("CSS",false)
 
 </head>
@@ -46,14 +49,16 @@
     </footer>
     
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
 
     <script src="~/Scripts/bootstrap.min.js"></script>
-    @*引入ajax套件*@
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    引入ajax套件
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
     
-
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
 
     @RenderSection("script", false)
     <script>

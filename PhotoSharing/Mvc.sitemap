@@ -11,7 +11,7 @@
     <mvcSiteMapNode title="All Photos" controller="Photos" action="Index"/>
     <mvcSiteMapNode title="Create Photos" controller="Photos" action="Create"/>
     <mvcSiteMapNode title="TestError" controller="Photos" action="ExceptionDemo"/>
-    <mvcSiteMapNode title="SlideShow" controller="Photos" action="SlideShow"/>
+    <mvcSiteMapNode title="SliderShow" controller="Photos" action="SliderShow"/>
   </mvcSiteMapNode>
   
 </mvcSiteMap>

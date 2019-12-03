@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "StateDemo2";
+}
+
+<h2>StateDemo2</h2>
+<hr />
+<ul>
+    <li>ViewBag:@ViewBag.Message</li>
+    <li>ViewData:@ViewData["myName"]</li>
+    <li>TempData myAge:@TempData["myAge"]</li>
+    <li>TempData myGender:@TempData["myGender"]</li>
+    <li>Session:@Session["myID"]</li>
+</ul>
+
+@Html.ActionLink("Go To Demo", "StateDemo")
