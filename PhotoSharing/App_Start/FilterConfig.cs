@@ -13,6 +13,7 @@ namespace PhotoSharing
 
             //須將剛剛建立的紀錄檔類別註冊在此(在此註冊是應用程式層級，全部應用程式都會記錄或到controller紀錄controller等級、action等級)
             filters.Add(new ValueReporter() { IsLog=true});
+            
         }
     }
 }

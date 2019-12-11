@@ -21,7 +21,8 @@ namespace PhotoSharing.Controllers
 
             return PartialView(comments);
         }
-        public PartialViewResult _Create(int PhotoID) {
+        public PartialViewResult _Create(int PhotoID)
+        {
             Comment newComment = new Comment();
             newComment.PhotoID = PhotoID;
 
@@ -29,17 +30,19 @@ namespace PhotoSharing.Controllers
 
             return PartialView("_CreateComment");
         }
-        [HttpPost,ValidateAntiForgeryToken]
-        public PartialViewResult _CommentsForPhoto(int PhotoID,Comment comment)
+        [HttpPost]
+        public PartialViewResult _CommentsForPhoto(int PhotoID, Comment comment)
         {
             context.Comment.Add(comment);
             context.SaveChanges();
 
-            var comments = context.Comment.Where(m => m.PhotoID == PhotoID).OrderByDescending(m=>m.CommentID);
+            var comments = context.Comment.Where(m => m.PhotoID == PhotoID).OrderByDescending(m => m.CommentID);
 
             ViewBag.PhotoID = PhotoID;
 
             return PartialView("_CommentsForPhoto", comments.ToList());
         }
+
+
     }
 }

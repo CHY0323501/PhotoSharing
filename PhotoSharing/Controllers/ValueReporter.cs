@@ -24,7 +24,7 @@ namespace PhotoSharing.Controllers
             Conn.Close();
         }
 
-        //要記得到app_start中的routeconfig中註冊
+        //要記得到app_start中的filterconfig中註冊
 
 
         void LogValues(RouteData routedata) //在此物件中可以取得曾對哪個controller&action提出request

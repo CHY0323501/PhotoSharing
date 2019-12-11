@@ -9,8 +9,8 @@ namespace PhotoSharing
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.{version}.js"
+                        "~/Scripts/jquery-{version}.js"
+                        //"~/Scripts/jquery.{version}.js"
                         ));
 
             // 使用開發版本的 Modernizr 進行開發並學習。然後，當您
@@ -30,3 +30,7 @@ namespace PhotoSharing
         }
     }
 }
+
+
+
+
